@@ -21,9 +21,9 @@
     "avatar placeholder"
   ],
   "scripts": {
-    "start": "NODE_OPTIONS='--openssl-legacy-provider' node scripts/start.js",
-    "build": "NODE_OPTIONS='--openssl-legacy-provider' node scripts/build.js",
-    "demo": "NODE_OPTIONS='--openssl-legacy-provider' node scripts/demo.js",
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js",
+    "demo": "node scripts/demo.js",
     "test": "node scripts/test.js"
   },
   "files": [
