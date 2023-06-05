@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { hashCode, getUnit, getBoolean, getRandomColor, getContrast } from '../utilities';
 
 const SIZE = 36;
@@ -36,6 +37,7 @@ function generateData(name, colors) {
 
 const AvatarBeam = (props) => {
   const data = generateData(props.name, props.colors);
+  const maskID = React.useMemo(() => uuidv4(), []);
 
   return (
     <svg
@@ -47,10 +49,10 @@ const AvatarBeam = (props) => {
       height={props.size}
     >
       {props.title && <title>{props.name}</title>}
-      <mask id="mask__beam" maskUnits="userSpaceOnUse" x={0} y={0} width={SIZE} height={SIZE}>
+      <mask id={maskID} maskUnits="userSpaceOnUse" x={0} y={0} width={SIZE} height={SIZE}>
         <rect width={SIZE} height={SIZE} rx={props.square ? undefined : SIZE * 2} fill="#FFFFFF" />
       </mask>
-      <g mask="url(#mask__beam)">
+      <g mask={`url(#${maskID})`}>
         <rect width={SIZE} height={SIZE} fill={data.backgroundColor} />
         <rect
           x="0"

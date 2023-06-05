@@ -1,4 +1,5 @@
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { hashCode, getRandomColor } from '../utilities';
 
 const SIZE = 90;
@@ -26,6 +27,7 @@ function generateColors(colors, name) {
 
 const AvatarRing = (props) => {
   const ringColors = generateColors(props.colors, props.name);
+  const maskID = React.useMemo(() => uuidv4(), []);
 
   return (
     <svg
@@ -37,10 +39,10 @@ const AvatarRing = (props) => {
       height={props.size}
     >
       {props.title && <title>{props.name}</title>}
-      <mask id="mask__ring" maskUnits="userSpaceOnUse" x={0} y={0} width={SIZE} height={SIZE}>
+      <mask id={maskID} maskUnits="userSpaceOnUse" x={0} y={0} width={SIZE} height={SIZE}>
         <rect width={SIZE} height={SIZE} rx={props.square ? undefined : SIZE * 2} fill="#FFFFFF" />
       </mask>
-      <g mask="url(#mask__ring)">
+      <g mask={`url(#${maskID})`}>
         <path d="M0 0h90v45H0z" fill={ringColors[0]} />
         <path d="M0 45h90v45H0z" fill={ringColors[1]} />
         <path d="M83 45a38 38 0 00-76 0h76z" fill={ringColors[2]} />

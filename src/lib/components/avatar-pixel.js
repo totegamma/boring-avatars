@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { hashCode, getRandomColor } from '../utilities';
 
 const ELEMENTS = 64;
@@ -17,6 +18,7 @@ function generateColors(name, colors) {
 
 const AvatarPixel = (props) => {
   const pixelColors = generateColors(props.name, props.colors);
+  const maskID = React.useMemo(() => uuidv4(), []);
 
   return (
     <svg
@@ -29,7 +31,7 @@ const AvatarPixel = (props) => {
     >
       {props.title && <title>{props.name}</title>}
       <mask
-        id="mask__pixel"
+        id={maskID}
         mask-type="alpha"
         maskUnits="userSpaceOnUse"
         x={0}
@@ -39,7 +41,7 @@ const AvatarPixel = (props) => {
       >
         <rect width={SIZE} height={SIZE} rx={props.square ? undefined : SIZE * 2} fill="#FFFFFF" />
       </mask>
-      <g mask="url(#mask__pixel)">
+      <g mask={`url(#${maskID})`}>
         <rect width={10} height={10} fill={pixelColors[0]} />
         <rect x={20} width={10} height={10} fill={pixelColors[1]} />
         <rect x={40} width={10} height={10} fill={pixelColors[2]} />
